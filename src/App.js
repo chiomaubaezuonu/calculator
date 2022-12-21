@@ -3,7 +3,7 @@ import React from 'react'
 
 const App = () => {
 const [val, setVal]= React.useState("")
- const [clear, setClear]= React.useState("")
+ //const [clear, setClear]= React.useState("")
 const[result, setResult] = React.useState("") 
 function handleClick(e){
    setVal(val + e.target.value)

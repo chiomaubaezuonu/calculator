@@ -11,7 +11,7 @@ function handleClick(e){
 }
 function reset(){
   setVal("")
-  // setResult(setVal(val => 0))
+   setResult("")
 }
 const calculate = () =>{
   setResult(eval(result + val))
@@ -27,7 +27,7 @@ const calculate = () =>{
         <div className='grid grid-cols-4'>
           <h3 onClick={reset} className='text-white cursor-pointer bg-red col-span-2 h-[65px]  text-center flex justify-center items-center border border-black'>AC</h3>
           <button value="/" onClick={handleClick} className='text-white bg-light-gray border border-black'>/</button >
-          <button value="X" onClick={handleClick} className='h-[65px] bg-light-gray border border-slate-700'>X</button>
+          <button value="*" onClick={handleClick} className='h-[65px] bg-light-gray border border-slate-700'>X</button>
           <button value={7} onClick= {(e) => setVal(val + e.target.value)} className='h-[65px] bg-[#4d4d4d] border border-black'>7</button>
           <button value={8} onClick={handleClick} className='h-[65px] bg-[#4d4d4d] border border-black'>8</button>
           <button value={9} onClick={handleClick} className='h-[65px] bg-[#4d4d4d] border border-black'>9</button>

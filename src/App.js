@@ -1,3 +1,4 @@
+/* eslint no-eval: 0 */
 import React from 'react'
 
 const App = () => {

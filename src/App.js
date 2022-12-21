@@ -16,6 +16,9 @@ function reset(){
 const calculate = () =>{
   setResult(eval(result + val))
 }
+const remove = () => {
+  setVal(val.slice(0, -1))
+}
   return (
     <div className='bg-[#c2c2d6] h-screen flex justify-center items-center'>
       <div className=' bg-black w-[320px] h-[408px] p-2'>
@@ -39,10 +42,10 @@ const calculate = () =>{
           <button value={1} onClick={handleClick} className='h-[65px] bg-[#4d4d4d] border border-black'>1</button>
           <button value={2} onClick={handleClick} className='h-[65px] bg-[#4d4d4d] border border-black'>2</button>
           <button value={3} onClick={handleClick} className='h-[65px] bg-[#4d4d4d] border border-black'>3</button>
-          <button onClick={calculate} className='grid-flow-row bg-blue'>=</button>
+          <button onClick={calculate} className='h-65 border border-black bg-blue'>=</button>
           <button value={0} onClick={handleClick} className='h-[65px] col-span-2 bg-[#4d4d4d] border border-black'>0</button>
           <button value= "." onClick={handleClick} className='h-[65px] bg-[#4d4d4d] border border-black'>.</button>
-          <button onClick={calculate} className='h-[65px] bg-blue'></button>
+          <button onClick={remove} className='h-[65px] bg-blue border border-black'>del</button>
         </div>
       </div>
     </div>

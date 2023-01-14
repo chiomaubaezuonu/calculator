@@ -1,31 +1,152 @@
 /* eslint no-eval: 0 */
 import React from 'react'
-import { useRef } from 'react';
+import { findAllInRenderedTree } from 'react-dom/test-utils'
+//import { useRef } from 'react';
 
 const App = () => {
-  //let [decimal, setDecimal] = React.useState(".")
   let [val, setVal] = React.useState("")
   const [result, setResult] = React.useState(0)
+  //const [operator, setOperator] = React.useState("")
+
   //console.log(val)
+  // const decimalPoint = "."
+  // const zero = "0"
+  // const sliceDown = val.slice(0, -1)
+  // const operators = /(\+|\-|\/|-)/
+  // else if (val === zero) {
+  //   setVal("")
+  // }
+  // else if (val.match(/^\+|^\-|^\*|^\//)) {
+  //   setVal(val.slice(0, -1))
+  // }
+  // else if (val.match(/(\+)$/)) {
+  //   setVal(val.slice(0, 1))
+  // }
+  // else if (val.match(/(\.)$/)) {
+  //   setVal(val.slice(0, -1))
+  // 
+
   function handleClick(e) {
-    setVal(val?.concat(e.target.value))
-    setResult(val?.concat(e.target.value))
-    // if (val.includes (".")) {
-    //     e.currentTarget.disabled = true;
+
+    //   function getLastOperand(val){
+    //let operator = (val.match(/\+|\-|\/|\*/g))
+    //     if(operator){
+    //    let lastOperand= val.lastIndexOf(operator.pop());
+    //     return val.slice(lastOperand + 1);
+    //     }else{
+    //         return "";
+    //     }
+    // }
+
+    const char = e.target.value
+    let newVal = val?.concat(char);
+    //  console.log(lastOperator)
+    //console.log(...arr)
+
+    // To prevent leading zeroes for all operands
+    if (char === "0") {
+      if (val === "0") {
+        newVal = val
+      }
+    }
+    if (val === "0") {
+      if (char !== "0") {
+        newVal = char;
+      }
+      if (char === "." || char.match(/\+|\-|\/|\*/g)) {
+        newVal = val + char;
+      }
+    }
+    let operator = (val.match(/\+|\-|\/|\*/g))
+    if (operator) {
+      let lastOperatorIndex = val.lastIndexOf(operator.pop());
+      let lastOperand = val.slice(lastOperatorIndex + 1);
+      if (lastOperand === "0" || char.match(/\+|\-|\/|\*|\./g)) {
+        newVal = val + char;
+      }
+      if (lastOperand === "0" && char === "0") {
+        newVal = val
+      }
+      if (lastOperand === "0" && char.match(/[1-9]/)) {
+        let a = val.replace(lastOperand, char)
+        newVal = a;
+      }
+    }
+    // To prevent leading decimal points in all operands
+    if (!val && char === ".") {
+      newVal = val
+    }
+    // prevent 5..5
+    let decimal = (val.match(/\./g))
+    if (decimal && !operator) {
+      if (char === ".") {
+        newVal = val;
+      }
+    }
+
+    if (operator) {
+      let lastOperatorIndex = val.lastIndexOf(operator.pop());
+      let lastOperand = val.slice(lastOperatorIndex + 1);
+      if (val[val.length - 1] === "." && char === ".") {
+        newVal = val;
+      }
+    }
+    // To prevent leading operators in all operands
+    //   function getLastOperand(val){
+    //     let operator = (val.match(/\+|\-|\/|\*/g))
+    //     if (operator) {
+    //       let firstOperand = val.indexOf(operator.shift())
+    //       let lastOperand = val.lastIndexOf(operator.pop());
+    //       let a = val.charAt(firstOperand)
+    //       let z = val.charAt(lastOperand)
+    //       let b = val.replace(a, z);
+    //       return b.slice(0, -1)
+    //     }
+    // }
+
+    if (val === "" && char.match(/\+|\-|\/|\*/g)) {
+      newVal = ""
+    }
+
+    function getLastOperator(val) {
+      let operator = (val.match(/\+|\-|\/|\*/g))
+      if (operator) {
+        let firstOperator = val.indexOf(operator.shift())
+        let lastOperator = val.lastIndexOf(operator.pop());
+        let a = val.charAt(firstOperator)
+        let z = val.charAt(lastOperator)
+        let b = val.replace(a, z);
+        newVal = b.slice(0, -1)
+        return newVal
+      }
+
+    }
+    if (operator) {
+      console.log(getLastOperator(val), val)
+    } 
+
+    // if (operator) {
+    //     let convert = operator.toString()
+    //     let firstOp = convert.slice(0,1)
+    //     let lastOp = convert.slice(-1)
+    //   let b = val.replace(firstOp, lastOp);
+
+    //   newVal = b.slice(0, 1 ) + char
     // } 
+
+    setVal(newVal)
+    setResult(newVal)
   }
-  
- 
   function reset() {
     setVal("")
     setResult(0)
-   
+
   }
+
   const calculate = () => {
     // setVal(val + " = " + (eval(val).toString()))
-      setVal(eval(val).toString())
-     setResult(eval(val).toString())
-
+    setVal(eval(val).toString())
+    setResult(eval(val).toString())
   }
 
 

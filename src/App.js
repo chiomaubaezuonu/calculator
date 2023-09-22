@@ -40,8 +40,7 @@ const App = () => {
 
     const char = e.target.value
     let newVal = val?.concat(char);
-    //  console.log(lastOperator)
-    //console.log(...arr)
+
 
     // To prevent leading zeroes for all operands
     if (char === "0") {
@@ -60,10 +59,15 @@ const App = () => {
     let operator = (val.match(/\+|\-|\/|\*/g))
     if (operator) {
       let lastOperatorIndex = val.lastIndexOf(operator.pop());
+      //2+3-9
+      // 2-3+9-000  
+      //console.log(lastOperatorIndex)
+      console.log(newVal)
       let lastOperand = val.slice(lastOperatorIndex + 1);
-      if (lastOperand === "0" || char.match(/\+|\-|\/|\*|\./g)) {
-        newVal = val + char;
-      }
+      // if (lastOperand === "0" || char.match(/\+|\-|\/|\*|\./g)) {
+      //   newVal = val + char;
+      // }
+      //console.log(newVal)
       if (lastOperand === "0" && char === "0") {
         newVal = val
       }
@@ -71,7 +75,9 @@ const App = () => {
         let a = val.replace(lastOperand, char)
         newVal = a;
       }
+
     }
+
     // To prevent leading decimal points in all operands
     if (!val && char === ".") {
       newVal = val
@@ -107,33 +113,70 @@ const App = () => {
     if (val === "" && char.match(/\+|\-|\/|\*/g)) {
       newVal = ""
     }
+    // if char = +-/* and "+-/*".contains(val[val.length-1])
+    // The replace last character in val with char
+    if (char.match(/\+|\-|\/|\*/g) && "+-/*".includes(val[val.length - 1])) {
+      if (char !== "-") {
 
-    function getLastOperator(val) {
-      let operator = (val.match(/\+|\-|\/|\*/g))
-      if (operator) {
-        let firstOperator = val.indexOf(operator.shift())
-        let lastOperator = val.lastIndexOf(operator.pop());
-        let a = val.charAt(firstOperator)
-        let z = val.charAt(lastOperator)
-        let b = val.replace(a, z);
-        newVal = b.slice(0, -1)
-        return newVal
+        newVal = val.replace(val[val.length - 1], char)
       }
-
+      // console.log(newVal)
     }
-    if (operator) {
-      console.log(getLastOperator(val), val)
-    } 
 
+    // function getLastOperator(val){
+    //   let operator = (val.match(/\+|\-|\/|\*/g))
+    //   if(operator){
+    //     let c = operator.toString();
+    //     let c2 = c[c.length-1];
+
+    //    let a = val[val.length-1];
+    //    let b = val[val.length-2]
+
+    //    return newVal = val ;
+
+
+    //   }
+    // }
+    // if (operator){
+    //   if(a !== b){
+    //     console.log(val.replace(b,a))
+    //   console.log(getLastOperator(val))
+    //   }
+    //console.log(char)
+    //console.log(val.match(operator.toString())
+    // }
+    // function getLastOperator(val) {
+    //   let operator = (val.match(/\+|\-|\/|\*/g))
+    //   if (operator) {
+    //     let firstOperator = val.indexOf(operator.shift())
+    //     let lastOperator = val.lastIndexOf(operator.pop());
+    //     let a = val.charAt(firstOperator)
+    //     let z = val.charAt(lastOperator)
+    //     let b = val.replace(a, z);
+    //     newVal = b.slice(0, -1)
+    //     return newVal
+    //   }
+
+    // }
     // if (operator) {
-    //     let convert = operator.toString()
-    //     let firstOp = convert.slice(0,1)
-    //     let lastOp = convert.slice(-1)
-    //   let b = val.replace(firstOp, lastOp);
-
-    //   newVal = b.slice(0, 1 ) + char
+    //   console.log(getLastOperator(val), val)
     // } 
+    //   function getLastOperator (val){
+    //     let operator = (val.match(/\+|\-|\/|\*/g))
+    //   let check = val.match(/\d/g)
+    //     if (check) {
+    //         if(operator){
+    //          let convert = operator.join("")
+    //         let firstOp = val[val.length-2]
+    //         let lastOp = val[val.length-1]
+    //             let ans = val.replace(firstOp, lastOp);
+    //             return newVal = ans.slice(0, -1) + char
 
+    //         }
+    //      } 
+    // }
+
+    // console.log(newVal)
     setVal(newVal)
     setResult(newVal)
   }
